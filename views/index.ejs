@@ -14,7 +14,7 @@
           <form action="/" method="post">
           <div>
           <label for="inputTitle" class="form-label">Title</label>
-          <input type="text" id="inputTitle" class="form-control" aria-describedby="titleHelpBlock" name="title">
+          <input type="text" id="inputTitle" class="form-control" aria-describedby="titleHelpBlock" name="title" required>
           <div id="titleHelpBlock" class="form-text">
           </div>
           </div>
@@ -27,45 +27,29 @@
         </div>
           </div>
 
-
+          <label for="inputAuther"></label>
           <div class="buttons-flex">
+      <select name="filter" class="form-select-md">
+        <option value="notSelected">Select filter</option>
+        <option value="partial">partial</option>
+        <option value="full">full</option>
+        <option value="free-ebooks">free-ebooks</option>
+        <option value="paid-ebooks">paid-ebooks</option>
+        <option value="ebooks">ebooks</option>
+      </select>
 
-      <div class="btn-group">
-        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          filter
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="">partial</a></li>
-          <li><a class="dropdown-item" href="">full</a></li>
-          <li><a class="dropdown-item" href="">free-ebooks</a></li>
-          <li><a class="dropdown-item" href="">paid-ebooks</a></li>
-          <li><a class="dropdown-item" href="">ebooks</a></li>
-        </ul>
-      </div>
+        <select name="printType" class="form-select-md">
+          <option value="notSelected">Select print type</option>
+          <option value="all">all</option>
+          <option value="books">books</option>
+          <option value="magazines">magazines</option>
+        </select>
 
-      <div class="btn-group"></div>
-        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          filter
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="">partial</a></li>
-          <li><a class="dropdown-item" href="">full</a></li>
-          <li><a class="dropdown-item" href="">free-ebooks</a></li>
-          <li><a class="dropdown-item" href="">paid-ebooks</a></li>
-          <li><a class="dropdown-item" href="">ebooks</a></li>
-        </ul>
-
-        <div class="btn-group"></div>
-        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          filter
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="">partial</a></li>
-          <li><a class="dropdown-item" href="">full</a></li>
-          <li><a class="dropdown-item" href="">free-ebooks</a></li>
-          <li><a class="dropdown-item" href="">paid-ebooks</a></li>
-          <li><a class="dropdown-item" href="">ebooks</a></li>
-        </ul>
+        <select name="sorting" class="form-select-md">
+          <option value="notSelected">Select sorting</option>
+          <option value="relevance">relevance</option>
+          <option value="newest">newest</option>
+        </select>
 
       </div>
       

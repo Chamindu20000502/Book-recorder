@@ -17,6 +17,10 @@ app.get("/",(req,res)=>{
 
 app.post("/",async(req,res)=>{
     const title = req.body["title"];
+    const auther = req.body["auther"];
+    const filter = req.body["filter"];
+    const printType = req.body["printType"];
+    const sorting = req.body["sorting"];
     try
     {
         const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
