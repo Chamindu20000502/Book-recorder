@@ -1,0 +1,28 @@
+.flex{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.flex-item
+{
+    flex-basis: 40%;
+    min-width: 25em;
+}
+
+.buttons-flex
+{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    margin: 1em;
+}
+
+#search-btn
+{
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
