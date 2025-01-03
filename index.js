@@ -21,19 +21,70 @@ app.post("/",async(req,res)=>{
     const filter = req.body["filter"];
     const printType = req.body["printType"];
     const sorting = req.body["sorting"];
-    try
+    
+    if(auther === "" && filter === "notSelected" && printType === "notSelected" && sorting === "notSelected")
     {
-        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
-        const arr = response["data"]["items"];
-        var booksArr = [];
-        for(var i = 0; i < arr.length; i++)
+        try
         {
-            booksArr.push(arr[i]["volumeInfo"]);
+            const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}`);            
+            if(response["data"]["totalItems"] > 0)
+            {
+                const arr = response["data"]["items"]; 
+                var booksArr = [];
+                for(var i = 0; i < arr.length; i++)
+                {
+                    booksArr.push(arr[i]["volumeInfo"]);
+                }
+                res.render("search.ejs",{books : booksArr});
+            }else
+            {
+                res.render("error.ejs",{error : "No result found."});
+            }
+        }catch(err)
+        {
+            res.render("error.ejs",{error : err});
         }
-        res.render("search.ejs",{books : booksArr});
-    }catch(err)
+    }else
     {
-        console.log(err);
+        var url = `https://www.googleapis.com/books/v1/volumes?q=${title}`;
+        if(auther !== "")
+        {
+            url += `+inauthor:${auther}`;
+        }
+        if(filter !== "notSelected")
+        {
+            url += `&filter=${filter}`;
+        }
+        if(printType !== "notSelected")
+        {
+            url += `&printType=${printType}`;
+        }
+        if(sorting !== "notSelected")
+        {
+            url += `&orderBy=${sorting}`;
+        }
+        url += `&key=${process.env.GOOGLE_BOOKS_API}`;
+
+        try
+        {
+            const response = await axios.get(url);            
+            if(response["data"]["totalItems"] > 0)
+            {
+                const arr = response["data"]["items"];        
+                var booksArr = [];
+                for(var i = 0; i < arr.length; i++)
+                {
+                    booksArr.push(arr[i]["volumeInfo"]);
+                }
+                res.render("search.ejs",{books : booksArr});
+            }else
+            {
+                res.render("error.ejs",{error : "No result found."});
+            }
+        }catch(err)
+        {
+            res.render("error.ejs",{error : err});
+        }
     }
 });
 

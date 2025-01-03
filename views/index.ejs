@@ -10,7 +10,7 @@
 <body>
     <div class="container">
        <div class="flex">
-        <div class="flex-item">
+        <div class="flex-item shadow-sm p-3 mb-5 bg-body-tertiary rounded">
           <form action="/" method="post">
           <div>
           <label for="inputTitle" class="form-label">Title</label>
@@ -26,10 +26,9 @@
           Not mandatory
         </div>
           </div>
-
-          <label for="inputAuther"></label>
+          
           <div class="buttons-flex">
-      <select name="filter" class="form-select-md">
+      <select name="filter" class="form-select-md shadow-sm bg-body-tertiary rounded">
         <option value="notSelected">Select filter</option>
         <option value="partial">partial</option>
         <option value="full">full</option>
@@ -38,14 +37,14 @@
         <option value="ebooks">ebooks</option>
       </select>
 
-        <select name="printType" class="form-select-md">
+        <select name="printType" class="form-select-md shadow-sm bg-body-tertiary rounded">
           <option value="notSelected">Select print type</option>
           <option value="all">all</option>
           <option value="books">books</option>
           <option value="magazines">magazines</option>
         </select>
 
-        <select name="sorting" class="form-select-md">
+        <select name="sorting" class="form-select-md shadow-sm bg-body-tertiary rounded">
           <option value="notSelected">Select sorting</option>
           <option value="relevance">relevance</option>
           <option value="newest">newest</option>

@@ -8,11 +8,14 @@
 </head>
 <body>
     <div class="container"></div>
-    <% for(var i=0; i < books.length; i++){ %>
+    <% if(locals.books){ %>
+      <% for(var i=0; i < books.length; i++){ %>
         <div class="card mb-5" ></div>
             <div class="row g-0">
               <div class="col-md-3">
+                <% try {%>
                 <img src='<%= books[i]["imageLinks"]["thumbnail"] %>' class="img-fluid rounded-center" alt="...">
+                <% }catch(err) {} %>
               </div>
               <div class="col-md-9">
                 <div class="card-body">
@@ -24,6 +27,7 @@
             </div>
           </div>
         <% } %>
+    <% } %>
     </div>
 
 
