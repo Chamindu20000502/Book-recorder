@@ -2,13 +2,26 @@ import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
 import env from "dotenv";
+import pg from "pg";
+import bcrypt from "bcrypt";
 
 const app = express();
 const port = 3000;
+const hashingRounds =10;
 
 env.config();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended : true}));
+
+const db = new pg.Client({
+    user : process.env.DB_USER,
+    host : process.env.DB_HOST,
+    database : process.env.DB_DATABASE,
+    password : process.env.DB_PASSWORD,
+    port : 5432
+});
+
+db.connect();
 
 
 app.get("/",(req,res)=>{
@@ -88,24 +101,32 @@ app.post("/",async(req,res)=>{
     }
 });
 
-app.get("/test",async (req,res)=>{
-    try
-    {
-        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=${process.env.GOOGLE_BOOKS_API}`);
-        console.log(response["data"]["items"][0]["volumeInfo"]);
-    }catch(err)
-    {
-        console.log(err);
-    }
+app.post("/register",(req,res)=>{
+    const username = req.body["username"];
+    const name = req.body["name"];
+    const pw = req.body["password"];
+
+    bcrypt.hash(pw,hashingRounds,async(err,hash)=>{
+        if(!err)
+        {
+            try
+            {
+                await db.query("insert into users (username,name,password) values ($1,$2,$3)",[username,name,hash]);
+            }catch(err_1)
+            {
+                res.render("error.ejs",{error : err_1});
+            }
+        }else
+        {
+            res.render("error.ejs",{error : err});
+        }
+    });
 });
 
-app.post("/filter",async (req,res)=>{
-    const title = req.body["title"];
-    const filter = req.body["filter"];
-    const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}&filter=${filter}&key=${process.env.GOOGLE_BOOKS_API}`);
-    console.log(response["data"]["items"][0]["volumeInfo"]);
+app.post("/login",(req,res)=>{
+    
 });
 
 app.listen(port,()=>{
-    console.log("app is listening on port + " + port);
+    console.log("app is listening on port : " + port);
 });
