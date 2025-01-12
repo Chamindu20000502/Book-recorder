@@ -4,10 +4,13 @@ import axios from "axios";
 import env from "dotenv";
 import pg from "pg";
 import bcrypt from "bcrypt";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const port = 3000;
 const hashingRounds =10;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 env.config();
 app.use(express.static("public"));
@@ -101,6 +104,12 @@ app.post("/",async(req,res)=>{
     }
 });
 
+
+app.get("/register",(req,res)=>{
+    res.sendFile(__dirname + "/public/html/register.html");
+});
+
+
 app.post("/register",(req,res)=>{
     const username = req.body["username"];
     const name = req.body["name"];
@@ -123,8 +132,45 @@ app.post("/register",(req,res)=>{
     });
 });
 
-app.post("/login",(req,res)=>{
-    
+
+app.get("/login",(req,res)=>{
+    res.sendFile(__dirname + "/public/html/login.html");
+});
+
+app.post("/login",async (req,res)=>{
+    const username = req.body["username"];
+    const password = req.body["password"];
+    try
+    {
+        const response = await db.query("select * from users where username = $1",[username]);
+        if(response.rowCount > 0){
+            bcrypt.compare(password,response.rows[0]["password"],(err,result)=>{
+                if(!err)
+                {
+                    if(result)
+                    {
+                        console.log("Login succes");
+                    }else{
+                        console.log("wrong password");
+                    }
+                }else
+                {
+                    res.render("error.ejs",{error : err});
+                }
+            });
+        }else
+        {
+            console.log("Unregistered user");
+        }
+    }catch(err)
+    {
+        res.render("error.ejs",{error : err});
+    }
+});
+
+app.get("/recent/:id",(req,res)=>{
+    console.log(req.params);
+    res.redirect("/");
 });
 
 app.listen(port,()=>{
