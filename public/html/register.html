@@ -21,13 +21,38 @@
                   <input required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   <div id="emailHelp" class="form-text">This will be your username.</div>
                 </div>
+
+                <label class="form-check-label">Enter gender</label><br>
+                <div class="form-check" style="display: inline-block; padding-right: 2em;">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Male    
+                  </label>
+                </div>
+                <div class="form-check" style="display: inline-block; padding-right: 2em;">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Female    
+                  </label>
+                </div>
+                <div class="form-check" style="display: inline-block; padding-right: 2em;">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Rather not say  
+                  </label>
+                </div>
+                
+
                 <div class="mb-3">
                   <label for="exampleInputPassword1" class="form-label">Password</label>
                   <input required type="password" class="form-control" id="exampleInputPassword1">
                 </div>
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm password</label>
-                    <input required type="password" class="form-control" id="confirmPassword">
+                    <input required type="password" class="form-control" id="confirmPassword" oninput="checkInfo()">
+                  </div>
+                  <div class="alert alert-danger" role="alert" id="pwLable" hidden>
+                    Passwords does not match
                   </div>
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -41,10 +66,16 @@
 
 
     <script>
-        function checkInfo(pw,confirmPw){
-            if(pw !== confirmPw){
-                alert("Passwords doesnt match");
-            }
+        function checkInfo(){
+          var pw = document.querySelector("#exampleInputPassword1").value;
+          var confirmPw = document.querySelector("#confirmPassword").value;
+          if(pw !== confirmPw){
+            document.querySelector("button").setAttribute("disabled","true");
+            document.querySelector("#pwLable").removeAttribute("hidden","true");
+          }else{
+            document.querySelector("button").removeAttribute("disabled","false");
+            document.querySelector("#pwLable").setAttribute("hidden","false");
+          }
         }
     </script>
 
